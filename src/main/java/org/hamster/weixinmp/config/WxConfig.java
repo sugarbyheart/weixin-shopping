@@ -47,7 +47,8 @@ public class WxConfig {
 	private @Value("#{wxProperties.wx_groups_getid_url}") String groupsGetIdUrl;
 	private @Value("#{wxProperties.wx_groups_update_url}") String groupsUpdateUrl;
 	private @Value("#{wxProperties.wx_groups_members_update_url}") String groupsMembersUpdateUrl;
-	
-	
-	
+
+	private @Value("#{wxProperties.wx_template_send_url}") String templateSendUrl;
+	private @Value("#{wxProperties.wx_default_template_id}") String defaultTemplateId;
+
 }

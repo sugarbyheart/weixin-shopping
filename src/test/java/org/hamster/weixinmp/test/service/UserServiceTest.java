@@ -4,6 +4,7 @@ import org.hamster.weixinmp.dao.entity.UserEntity;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
 import org.hamster.weixinmp.dao.repository.UserDao;
+import org.hamster.weixinmp.service.UserService;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractServiceTest;
 import org.junit.Assert;
@@ -13,13 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tom on 18/4/26.
  */
-public class WxUserRegistrationTest extends AbstractServiceTest {
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private WxMessageService wxMessageService;
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserService userService;
 
     private static final String MSG_USER_SUBSCRIBE =
                     "<xml>" +
@@ -73,6 +77,15 @@ public class WxUserRegistrationTest extends AbstractServiceTest {
         userDao.save(userEntity);
         Assert.assertFalse(userEntity.isValid());
 
+    }
+
+    @Test
+    public void testUserServiceSubsribe() throws Exception {
+        WxBaseMsgEntity wxBaseMsgEntity = wxMessageService.parseXML(MSG_USER_SUBSCRIBE);
+        Assert.assertTrue(userService.userSubscribe((WxMsgEventEntity) wxBaseMsgEntity));
+
+        wxBaseMsgEntity = wxMessageService.parseXML(MSG_USER_UNSUBSCRIBE);
+        Assert.assertTrue(userService.userUnsubscribe((WxMsgEventEntity) wxBaseMsgEntity));
     }
 
 }

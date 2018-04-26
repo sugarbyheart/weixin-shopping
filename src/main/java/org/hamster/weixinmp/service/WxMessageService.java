@@ -14,6 +14,7 @@ import java.util.Map;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.hamster.weixinmp.config.WxConfig;
 import org.hamster.weixinmp.constant.WxMsgRespType;
 import org.hamster.weixinmp.constant.WxMsgRespTypeEnum;
 import org.hamster.weixinmp.constant.WxMsgTypeEnum;
@@ -27,8 +28,12 @@ import org.hamster.weixinmp.dao.entity.resp.WxRespTextEntity;
 import org.hamster.weixinmp.dao.entity.resp.WxRespVideoEntity;
 import org.hamster.weixinmp.dao.entity.resp.WxRespVoiceEntity;
 import org.hamster.weixinmp.exception.WxException;
+import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
+import org.hamster.weixinmp.model.send.SendTemplateJson;
 import org.hamster.weixinmp.service.handler.WxMessageHandlerIfc;
+import org.hamster.weixinmp.util.WxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,6 +46,9 @@ public class WxMessageService {
 	
 	@Autowired(required=false)
 	List<WxMessageHandlerIfc> handlers;
+
+	@Autowired
+	WxConfig config;
 	
 	public WxBaseMsgEntity parseXML(String xml) throws DocumentException,
 			WxException {
@@ -119,6 +127,20 @@ public class WxMessageService {
 		result.setMsgType(WxMsgRespType.TEXT);
 		result.setToUserName(toUserName);
 		return result;
+	}
+
+	public TemplateSendResponseJson remoteSendTemplate(String accessToken, String openId,
+													   String templateId, String url)
+			throws WxException {
+
+		SendTemplateJson wxTemplateInfo =
+				SendTemplateJson.builder().touser(openId).template_id(templateId).url(url).build();
+		Map<String, String> params = WxUtil.getAccessTokenParams(accessToken);
+
+		TemplateSendResponseJson templateSendResultMapper =
+				WxUtil.sendRequest(config.getTemplateSendUrl(), HttpMethod.POST, params,
+						WxUtil.toJsonStringEntity(wxTemplateInfo), TemplateSendResponseJson.class);
+		return templateSendResultMapper;
 	}
 	
 
