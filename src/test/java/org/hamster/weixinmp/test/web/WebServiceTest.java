@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tom on 18/4/25.
  */
-public class WebScratchTest extends AbstractWxServiceTest {
+public class WebServiceTest extends AbstractWxServiceTest {
 
     private final String canBuy =
             "http://m.shilladfs.com/estore/kr/zh/Skin-Care/Basic-Skin-Care/Skin-Toner/p/408672";
