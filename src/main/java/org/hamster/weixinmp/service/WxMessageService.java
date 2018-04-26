@@ -45,8 +45,8 @@ public class WxMessageService {
 	public WxBaseMsgEntity parseXML(String xml) throws DocumentException,
 			WxException {
 		Element ele = DocumentHelper.parseText(xml).getRootElement();
-		String msgType = null;
-		if ((msgType = ele.elementText("MsgType")) == null) {
+		String msgType = ele.elementText("MsgType");
+		if (msgType == null) {
 			throw new WxException("cannot find MsgType Node!\n" + xml);
 		}
 		WxMsgTypeEnum msgTypeEnum = WxMsgTypeEnum.inst(msgType);

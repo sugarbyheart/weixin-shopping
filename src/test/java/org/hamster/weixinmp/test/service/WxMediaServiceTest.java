@@ -27,10 +27,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WxMediaServiceTest extends AbstractWxServiceTest {
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 
 	@Autowired
-	WxMediaService mediaService;
+	private WxMediaService mediaService;
 
 	@Test
 	@Ignore

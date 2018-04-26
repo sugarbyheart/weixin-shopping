@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WxUserServiceTest extends AbstractWxServiceTest {
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 	@Autowired
-	WxUserService userService;
+	private WxUserService userService;
 	
 	@Test
 	public void testAll() throws WxException {

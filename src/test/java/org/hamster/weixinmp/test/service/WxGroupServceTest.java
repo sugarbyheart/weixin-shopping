@@ -21,10 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WxGroupServceTest extends AbstractWxServiceTest {
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 	
 	@Autowired
-	WxUserGroupService userGroupService;
+	private WxUserGroupService userGroupService;
 	
 	@Test
 	public void testAll() throws WxException {

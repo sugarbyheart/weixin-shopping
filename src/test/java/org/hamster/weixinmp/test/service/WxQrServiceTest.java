@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WxQrServiceTest extends AbstractWxServiceTest {
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 	
 	@Autowired
-	WxQrService qrService;
+	private WxQrService qrService;
 	
 	@Test
 	public void testAll() throws WxException {

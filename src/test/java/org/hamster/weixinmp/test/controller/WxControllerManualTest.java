@@ -29,7 +29,7 @@ import org.junit.Test;
  */
 public class WxControllerManualTest {
 	
-	public static final String WX_URL = "http://localhost:8080/rest/weixinmp";
+	private static final String WX_URL = "http://localhost:8080/rest/weixinmp";
 	
 	@Test 
 	@Ignore
@@ -38,7 +38,7 @@ public class WxControllerManualTest {
 		HttpPost httppost = new HttpPost(WX_URL);
 
 		// Request parameters and other properties.
-		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("signature", "38f004a5f222473f3abd85fd8e4b1de2349119c6"));
 		params.add(new BasicNameValuePair("timestamp", "1375192987"));
 		params.add(new BasicNameValuePair("nonce", "1374785014"));

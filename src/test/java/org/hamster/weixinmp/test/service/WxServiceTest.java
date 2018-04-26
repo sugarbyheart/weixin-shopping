@@ -20,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WxServiceTest extends AbstractServiceTest {
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 	
 	@Autowired
-	WxBaseMsgDao wxBaseMsgDao;
+	private WxBaseMsgDao wxBaseMsgDao;
 
 	@Test
 	public void testValidateAuth() throws WxException {

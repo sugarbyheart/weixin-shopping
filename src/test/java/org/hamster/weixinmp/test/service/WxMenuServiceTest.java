@@ -35,9 +35,9 @@ public class WxMenuServiceTest extends AbstractWxServiceTest {
 			+ "   \"key\":\"V1001_GOOD\"" + " }]" + "}]" + "}";
 
 	@Autowired
-	WxAuthService authService;
+	private WxAuthService authService;
 	@Autowired
-	WxMenuService menuService;
+	private WxMenuService menuService;
 
 	@Test
 	public void testAll() throws WxException {
