@@ -24,10 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version Jul 28, 2013
  * 
  */
-@Controller
-@RequestMapping("/rest/weixinmp")
 
+@Controller
+@RequestMapping("/api/v1")
 public class WxController {
+
 	private static final Logger log = Logger.getLogger(WxController.class);
 	
 	@Autowired
@@ -35,16 +36,18 @@ public class WxController {
 	@Autowired
 	private WxMessageService messageService;
 	
-	@RequestMapping(method = {RequestMethod.GET,})
+	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody
 	String authGet(@RequestParam("signature") String signature,
-			@RequestParam("timestamp") String timestamp,
-			@RequestParam("nonce") String nonce,
-			@RequestParam("echostr") String echostr) throws WxException {
+				   @RequestParam("timestamp") String timestamp,
+				   @RequestParam("nonce") String nonce,
+				   @RequestParam("echostr") String echostr) throws WxException {
+
 		if (authService.validateAuth(signature, timestamp, nonce, echostr)) {
 			log.info("received authentication message from Weixin Server.");
 			return echostr;
 		}
+
 		return null;
 	}
 

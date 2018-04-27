@@ -1,16 +1,12 @@
 package org.hamster.weixinmp.test.service;
 
 import org.hamster.weixinmp.config.WxConfig;
-import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
-import org.hamster.weixinmp.service.WxAuthService;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractWxServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.validation.constraints.AssertTrue;
 
 /**
  * Created by tom on 18/4/26.
