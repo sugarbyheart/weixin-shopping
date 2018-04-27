@@ -69,7 +69,7 @@ public class WxXmlUtil {
 	 * &lt;/xml&gt;<br />
 	 * </code>
 	 * 
-	 * @param xmlstr
+	 * @param ele
 	 * @return
 	 * @throws DocumentException
 	 */
@@ -93,7 +93,7 @@ public class WxXmlUtil {
      * &lt;/xml&gt;
 	 * </code>
 	 * 
-	 * @param xmlstr
+	 * @param ele
 	 * @return
 	 * @throws DocumentException
 	 */
@@ -179,7 +179,7 @@ public class WxXmlUtil {
 	 * </code>
 	 * 
 	 * 
-	 * @param xmlstr
+	 * @param ele
 	 * @return
 	 * @throws DocumentException
 	 */
@@ -206,7 +206,7 @@ public class WxXmlUtil {
 	 * &lt;/xml&gt; 
 	 * </code>
 	 * 
-	 * @param xmlstr
+	 * @param ele
 	 * @return
 	 * @throws DocumentException
 	 */
@@ -230,7 +230,7 @@ public class WxXmlUtil {
 	 * &lt;/xml&gt;
 	 * </code>
 	 * 
-	 * @param xmlstr
+	 * @param ele
 	 * @return
 	 * @throws DocumentException
 	 */

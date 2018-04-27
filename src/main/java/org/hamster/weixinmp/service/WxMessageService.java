@@ -30,6 +30,7 @@ import org.hamster.weixinmp.dao.entity.resp.WxRespVoiceEntity;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
 import org.hamster.weixinmp.model.send.SendTemplateJson;
+import org.hamster.weixinmp.service.handler.WxEventMessageHandler;
 import org.hamster.weixinmp.service.handler.WxMessageHandlerIfc;
 import org.hamster.weixinmp.util.WxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class WxMessageService {
 	
-	@Autowired(required=false)
-	List<WxMessageHandlerIfc> handlers;
+//	@Autowired(required=false)
+//	List<WxMessageHandlerIfc> handlers;
 
 	@Autowired
-	WxConfig config;
+	private WxEventMessageHandler wxEventMessageHandler;
+
+	@Autowired
+	private WxConfig config;
 	
 	public WxBaseMsgEntity parseXML(String xml) throws DocumentException,
 			WxException {
@@ -81,20 +85,25 @@ public class WxMessageService {
 	}
 	
 	public WxBaseRespEntity handleMessage(WxBaseMsgEntity msg) {
-		List<WxMessageHandlerIfc> handlerList = new ArrayList<WxMessageHandlerIfc>();
-		handlerList.addAll(handlers);
-		Collections.sort(handlerList, new WxMessageHandlerComparator());
-		
-		Map<String, Object> context = new HashMap<String, Object>();
-		WxBaseRespEntity result = null;
-		for (WxMessageHandlerIfc handler : handlerList) {
-			result = handler.handle(msg, context);
+//		List<WxMessageHandlerIfc> handlerList = new ArrayList<WxMessageHandlerIfc>();
+//		handlerList.addAll(handlers);
+//		Collections.sort(handlerList, new WxMessageHandlerComparator());
+//
+//		Map<String, Object> context = new HashMap<String, Object>();
+//		WxBaseRespEntity result = null;
+//		for (WxMessageHandlerIfc handler : handlerList) {
+//			result = handler.handle(msg, context);
+//		}
+//
+//		if (result == null) {
+//			result = defaultResult(msg.getToUserName(), msg.getFromUserName());
+//		}
+//		return result;
+		if (msg.getMsgType().equals(WxMsgTypeEnum.EVENT.toString())) {
+			return wxEventMessageHandler.handle(msg, null);
 		}
-		
-		if (result == null) {
-			result = defaultResult(msg.getToUserName(), msg.getFromUserName());
-		}
-		return result;
+		return null;
+
 	}
 	
 	public Element parseRespXML(WxBaseRespEntity resp) throws DocumentException {

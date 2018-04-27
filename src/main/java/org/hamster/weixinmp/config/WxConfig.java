@@ -22,7 +22,9 @@ public class WxConfig {
 	public static final int COL_LEN_TITLE  = 200;
 	public static final int COL_LEN_USER_NAME  = 100;
 	public static final int COL_LEN_INDICATOR  = 64;
-	
+	public static final int COL_LINK = 1000;
+	public static final int COL_LINK_HASH = 30;
+
 	private @Value("#{wxProperties.wx_token}") String token;
 	private @Value("#{wxProperties.wx_appid}") String appid;
 	private @Value("#{wxProperties.wx_appsecret}") String appsecret;

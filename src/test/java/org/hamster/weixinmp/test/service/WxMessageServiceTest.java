@@ -1,6 +1,10 @@
 package org.hamster.weixinmp.test.service;
 
+import org.dom4j.DocumentException;
 import org.hamster.weixinmp.config.WxConfig;
+import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
+import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
+import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractWxServiceTest;
@@ -23,6 +27,14 @@ public class WxMessageServiceTest extends AbstractWxServiceTest {
     private final String url =
             "http://m.shilladfs.com/estore/kr/zh/Skin-Care/Basic-Skin-Care/Basic-Skin-Care-Set/p/3181836";
 
+    private final String MSG_USER_SUBSCRIBE =
+                    "<xml>" +
+                    "<ToUserName>abcdefg</ToUserName>" +
+                    "<FromUserName>abcdefg</FromUserName>" +
+                    "<CreateTime>123456789</CreateTime>" +
+                    "<MsgType>event</MsgType>" +
+                    "<Event>subscribe</Event>" +
+                    "</xml>";
 
     @Test
     public void testTemplateSend() {
@@ -35,6 +47,12 @@ public class WxMessageServiceTest extends AbstractWxServiceTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testUserSubscribe() throws DocumentException, WxException {
+        WxBaseMsgEntity wxBaseMsgEntity = wxMessageService.parseXML(MSG_USER_SUBSCRIBE);
+        Assert.assertNotNull(wxMessageService.handleMessage(wxBaseMsgEntity));
     }
 
 

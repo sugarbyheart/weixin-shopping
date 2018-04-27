@@ -6,6 +6,7 @@ import org.hamster.weixinmp.dao.entity.UserEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
 import org.hamster.weixinmp.dao.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Slf4j
-@Service
+@Component
 public class UserService {
 
     @Autowired

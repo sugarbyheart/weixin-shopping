@@ -24,6 +24,11 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.properties</param-value>
+	</context-param>
+
 	<!--configure the setting of springmvcDispatcherServlet and configure the mapping-->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
