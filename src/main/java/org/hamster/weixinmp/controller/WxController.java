@@ -3,6 +3,7 @@
  */
 package org.hamster.weixinmp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
@@ -27,10 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api/v1")
+@Slf4j
 public class WxController {
 
-	private static final Logger log = Logger.getLogger(WxController.class);
-	
 	@Autowired
 	private WxAuthService authService;
 	@Autowired
@@ -54,11 +54,10 @@ public class WxController {
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody
 	String post(@RequestBody String requestBody) throws DocumentException, WxException {
+
 		WxBaseMsgEntity msg = messageService.parseXML(requestBody);
 		log.info("received " + msg.getMsgType() + " message.");
-		
 		WxBaseRespEntity resp = messageService.handleMessage(msg);
-		
 		return messageService.parseRespXML(resp).asXML();
 	}
 
