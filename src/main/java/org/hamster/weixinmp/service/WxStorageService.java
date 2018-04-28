@@ -116,8 +116,6 @@ public class WxStorageService {
 	
 	@Autowired(required = false)
 	protected WxGroupDao groupDao;
-	@Autowired(required = false)
-	protected WxUserDao userDao;
 
 	@Setter
 	protected String token;

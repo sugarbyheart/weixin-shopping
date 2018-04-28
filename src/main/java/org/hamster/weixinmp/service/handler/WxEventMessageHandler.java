@@ -6,12 +6,9 @@ import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.base.WxBaseRespEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
 import org.hamster.weixinmp.dao.entity.resp.WxRespTextEntity;
-import org.hamster.weixinmp.dao.repository.UserDao;
 import org.hamster.weixinmp.service.UserService;
 import org.hamster.weixinmp.service.WxStorageService;
-import org.hamster.weixinmp.service.WxUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

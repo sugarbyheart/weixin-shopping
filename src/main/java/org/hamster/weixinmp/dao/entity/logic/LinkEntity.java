@@ -1,4 +1,4 @@
-package org.hamster.weixinmp.dao.entity;
+package org.hamster.weixinmp.dao.entity.logic;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

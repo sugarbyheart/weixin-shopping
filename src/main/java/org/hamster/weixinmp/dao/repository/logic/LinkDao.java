@@ -1,6 +1,6 @@
-package org.hamster.weixinmp.dao.repository;
+package org.hamster.weixinmp.dao.repository.logic;
 
-import org.hamster.weixinmp.dao.entity.LinkEntity;
+import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

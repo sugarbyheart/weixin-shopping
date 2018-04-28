@@ -1,11 +1,12 @@
 package org.hamster.weixinmp.service;
 
 import com.google.common.base.Strings;
-import org.hamster.weixinmp.dao.entity.LinkEntity;
-import org.hamster.weixinmp.dao.repository.LinkDao;
+import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
+import org.hamster.weixinmp.dao.repository.logic.LinkDao;
 import org.hamster.weixinmp.exception.WxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by tom on 18/4/27.
  */
 
-@Component
+@Service
 public class LinkMessageService {
 
     @Autowired

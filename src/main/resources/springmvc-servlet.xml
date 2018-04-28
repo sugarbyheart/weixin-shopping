@@ -20,8 +20,53 @@
 	<!-- scan service class with @components -->
 	<context:component-scan base-package="org.hamster.weixinmp" />
 
-	<bean id="customerService" class="org.hamster.weixinmp.service.logic.MainService"
-		  init-method="init" >
+	<bean
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/wx.properties</value>
+			</list>
+		</property>
 	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+
+	<bean id="entityManagerFactory"
+		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="org.hamster.weixinmp.dao" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<jpa:repositories base-package="org.hamster.weixinmp.dao"
+					  entity-manager-factory-ref="entityManagerFactory"
+					  transaction-manager-ref="transactionManager" repository-impl-postfix="Impl" />
+
+	<!-- datasource -->
+	<bean id="dataSource"
+		  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+
+
 
 </beans>

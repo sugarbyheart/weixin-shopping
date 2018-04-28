@@ -1,9 +1,9 @@
 package org.hamster.weixinmp.test.service;
 
-import org.hamster.weixinmp.dao.entity.UserEntity;
+import org.hamster.weixinmp.dao.entity.logic.UserEntity;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
-import org.hamster.weixinmp.dao.repository.UserDao;
+import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.hamster.weixinmp.service.UserService;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractServiceTest;

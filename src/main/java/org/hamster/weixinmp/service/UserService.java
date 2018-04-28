@@ -1,10 +1,10 @@
 package org.hamster.weixinmp.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hamster.weixinmp.config.WxConfig;
-import org.hamster.weixinmp.dao.entity.UserEntity;
+import org.hamster.weixinmp.dao.entity.logic.UserEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
-import org.hamster.weixinmp.dao.repository.UserDao;
+import org.hamster.weixinmp.dao.repository.logic.LinkDao;
+import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,7 @@ import java.util.List;
  * Created by tom on 18/4/26.
  */
 
-@Slf4j
-@Component
+@Service
 public class UserService {
 
     @Autowired
