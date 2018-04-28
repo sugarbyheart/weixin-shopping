@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hamster.weixinmp.config.WxConfig;
+import org.hamster.weixinmp.constant.LinkType;
+import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.base.WxBaseEntity;
 
 import javax.persistence.Column;
@@ -33,5 +35,7 @@ public class LinkEntity extends WxBaseEntity {
     private Long expireTime;
     @Column(name = "is_valid", nullable = false)
     private boolean isValid = true;
+    @Column(name = "type", nullable = false)
+    private LinkTypeEnum type;
 
 }

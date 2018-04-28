@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by tom on 18/4/26.
  */
@@ -49,6 +53,15 @@ public class UserService {
         userEntity.setUpdateTime(System.currentTimeMillis());
         userDao.save(userEntity);
         return true;
+    }
+
+    public List<UserEntity> loadUsers() {
+        List<UserEntity> userEntities = new ArrayList<>();
+        Iterator<UserEntity> iterator = userDao.findAll().iterator();
+        while(iterator.hasNext()) {
+            userEntities.add(iterator.next());
+        }
+        return userEntities;
     }
 
 

@@ -20,4 +20,8 @@
 	<!-- scan service class with @components -->
 	<context:component-scan base-package="org.hamster.weixinmp" />
 
+	<bean id="customerService" class="org.hamster.weixinmp.service.logic.MainService"
+		  init-method="init" >
+	</bean>
+
 </beans>

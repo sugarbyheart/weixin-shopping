@@ -7,6 +7,10 @@ import org.hamster.weixinmp.exception.WxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by tom on 18/4/27.
  */
@@ -48,5 +52,13 @@ public class LinkMessageService {
         return linkEntity.getId();
     }
 
+    public List<LinkEntity> loadLinkEntities() {
+        List<LinkEntity> linkEntityList = new ArrayList<>();
+        Iterator<LinkEntity> iterator = linkDao.findAll().iterator();
+        while(iterator.hasNext()) {
+            linkEntityList.add(iterator.next());
+        }
+        return linkEntityList;
+    }
 
 }
