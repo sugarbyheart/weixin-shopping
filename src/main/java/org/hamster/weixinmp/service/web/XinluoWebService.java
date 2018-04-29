@@ -1,6 +1,7 @@
 package org.hamster.weixinmp.service.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -18,6 +19,11 @@ public class XinluoWebService implements WebServiceInterface {
     private final String selector =
             "#container > div.detail_view > div.pr_wrap.clear_both > div.txt > ul > li > a.btn_soldout";
 //    private final String selector2 = "#reapply";
+
+    @Override
+    public LinkTypeEnum linkType() {
+        return LinkTypeEnum.Xinluo;
+    }
 
     @Override
     public boolean validUrl(String url) {

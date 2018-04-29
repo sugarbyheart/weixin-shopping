@@ -27,23 +27,9 @@ public class LinkMessageService {
         return true;
     }
 
-    private LinkTypeEnum getLinkType(String link) {
-        if (link.contains("shilladfs")) {
-            return LinkTypeEnum.Xinluo;
-        } else if (link.contains("lottedfs")) {
-            return LinkTypeEnum.Letian;
-        } else {
-            return null;
-        }
-    }
-
-    public boolean addLink(String link, String openId, Long expireTime) throws WxException {
+    public boolean addLink(String link, String openId, Long expireTime, LinkTypeEnum linkTypeEnum) throws WxException {
         if (!checkLink(link)) {
             throw new WxException("Link is invalid: " + link);
-        }
-        LinkTypeEnum linkTypeEnum = this.getLinkType(link);
-        if (linkTypeEnum == null) {
-            return false;
         }
         LinkEntity linkEntity = new LinkEntity();
         linkEntity.setLink(link);

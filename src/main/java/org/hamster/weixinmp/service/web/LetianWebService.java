@@ -1,6 +1,7 @@
 package org.hamster.weixinmp.service.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -16,6 +17,12 @@ public class LetianWebService implements WebServiceInterface {
 
     private final String base = "chn.lottedfs.com";
     private final String selector = "#prdDetailTopArea > div.productArea > div.info > div.buyBtn.soldOut";
+
+    @Override
+    public LinkTypeEnum linkType() {
+        return LinkTypeEnum.Letian;
+    }
+
     @Override
     public boolean validUrl(String url) {
         if (!url.contains(base)) {

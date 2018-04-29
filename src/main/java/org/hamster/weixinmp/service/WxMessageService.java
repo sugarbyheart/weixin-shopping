@@ -32,6 +32,7 @@ import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
 import org.hamster.weixinmp.model.send.SendTemplateJson;
 import org.hamster.weixinmp.service.handler.WxEventMessageHandler;
 import org.hamster.weixinmp.service.handler.WxMessageHandlerIfc;
+import org.hamster.weixinmp.service.handler.WxTextMessageHandler;
 import org.hamster.weixinmp.util.WxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -50,6 +51,10 @@ public class WxMessageService {
 
 	@Autowired
 	private WxEventMessageHandler wxEventMessageHandler;
+	@Autowired
+	private WxTextMessageHandler wxTextMessageHandler;
+	@Autowired
+	private WxStorageService wxStorageService;
 
 	@Autowired
 	private WxConfig config;
@@ -84,7 +89,7 @@ public class WxMessageService {
 		return null;
 	}
 	
-	public WxBaseRespEntity handleMessage(WxBaseMsgEntity msg) {
+	public WxBaseRespEntity handleMessage(WxBaseMsgEntity msg) throws WxException {
 //		List<WxMessageHandlerIfc> handlerList = new ArrayList<WxMessageHandlerIfc>();
 //		handlerList.addAll(handlers);
 //		Collections.sort(handlerList, new WxMessageHandlerComparator());
@@ -101,8 +106,12 @@ public class WxMessageService {
 //		return result;
 		if (msg.getMsgType().equals(WxMsgTypeEnum.EVENT.toString())) {
 			return wxEventMessageHandler.handle(msg, null);
+		} else if (msg.getMsgType().equals(WxMsgTypeEnum.TEXT.toString())) {
+			return wxTextMessageHandler.handle(msg, null);
+		} else {
+			return wxStorageService.createRespText("我们已经收到您的消息！请输入您要监控的货物的链接", msg.getFromUserName(),
+					msg.getToUserName(), 1);
 		}
-		return null;
 
 	}
 	
