@@ -12,7 +12,12 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamster.weixinmp.config.WxConfig;
+import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.auth.WxAuth;
+import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
+import org.hamster.weixinmp.dao.entity.logic.UserEntity;
+import org.hamster.weixinmp.dao.repository.logic.LinkDao;
+import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.WxAuthService;
 import org.junit.Before;
@@ -36,7 +41,13 @@ public abstract class AbstractWxServiceTest extends AbstractServiceTest {
 	
 	@Autowired
 	WxAuthService authService;
-	
+
+	@Autowired
+	UserDao userDao;
+
+	@Autowired
+	LinkDao linkDao;
+
 	@Before
 	public void setUp() throws WxException, IOException {
 		if (StringUtils.isBlank(accessToken)) {
@@ -56,5 +67,26 @@ public abstract class AbstractWxServiceTest extends AbstractServiceTest {
 				reader.close();
 			}
 		}
+
+		prepareFordata();
+
+	}
+
+	private void prepareFordata() {
+		UserEntity userEntity = new UserEntity();
+		userEntity.setOpenId("11111");
+		userEntity.setFirstFollowTime(System.currentTimeMillis());
+		userEntity.setUpdateTime(System.currentTimeMillis());
+		userEntity.setValid(true);
+		userDao.save(userEntity);
+
+		LinkEntity linkEntity = new LinkEntity();
+		linkEntity.setLink("http://m.shilladfs.com/estore/kr/zh/Skin-Care/" +
+				"Basic-Skin-Care/Basic-Skin-Care-Set/p/3181836");
+		linkEntity.setOpenId("11111");
+		linkEntity.setValid(true);
+		linkEntity.setCreateTime(System.currentTimeMillis());
+		linkEntity.setLinkHash("1111");
+		linkEntity.setType(LinkTypeEnum.Xinluo);
 	}
 }

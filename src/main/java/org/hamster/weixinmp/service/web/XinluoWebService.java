@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class XinluoWebService implements WebServiceInterface {
 
-    private final String prefix = "http://m.shilladfs.com/estore/kr/zh";
+    private final String prefix = "m.shilladfs.com";
     private final String selector =
             "#container > div.detail_view > div.pr_wrap.clear_both > div.txt > ul > li > a.btn_soldout";
 //    private final String selector2 = "#reapply";
 
     @Override
     public boolean validUrl(String url) {
-        if (!url.startsWith(prefix)) {
+        if (!url.contains(prefix)) {
             return false;
         }
         return true;

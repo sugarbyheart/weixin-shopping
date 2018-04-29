@@ -12,8 +12,13 @@ import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.service.web.LetianWebService;
 import org.hamster.weixinmp.service.web.XinluoWebService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -21,7 +26,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 
 @Slf4j
-@Service
+@Component
+@EnableScheduling
 public class MainService {
 
     @Autowired
@@ -49,20 +55,22 @@ public class MainService {
         return linkEntityList.offer(linkEntity);
     }
 
-    public void init() {
-        for (UserEntity userEntity : userService.loadUsers()) {
-            userEntitiyList.add(userEntity);
-        }
-        for (LinkEntity linkEntity : linkMessageService.loadLinkEntities()) {
-            linkEntityList.add(linkEntity);
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        userEntitiyList = new ConcurrentLinkedDeque<>();
+//        linkEntityList = new ConcurrentLinkedDeque<>();
+//        for (UserEntity userEntity : userService.loadUsers()) {
+//            userEntitiyList.add(userEntity);
+//        }
+//        for (LinkEntity linkEntity : linkMessageService.loadLinkEntities()) {
+//            linkEntityList.add(linkEntity);
+//        }
+//    }
 
     public void start() {
-
-        while (true) {
-
-            LinkEntity linkEntity = linkEntityList.poll();
+        log.info("------------------- main service start() --------------------");
+        List<LinkEntity> linkEntityList = linkMessageService.loadLinkEntities();
+        for (LinkEntity linkEntity : linkEntityList) {
             try {
                 if (linkEntity == null) {
                     continue;
@@ -73,23 +81,21 @@ public class MainService {
                         wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
                                 linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
                     }
+                    linkEntityList.add(linkEntity);
                 } else if (linkEntity.getType().equals(LinkTypeEnum.Letian)) {
                     log.info("Check Letian link: " + linkEntity.getLink());
                     if (letianWebService.canBuy(linkEntity.getLink())) {
                         wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
                                 linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
                     }
+                    linkEntityList.add(linkEntity);
                 } else {
                     // Never heppen
                 }
             } catch (Exception e) {
                 log.error("Exception: ", e);
-                if (linkEntity != null) {
-                    linkEntityList.offer(linkEntity);
-                }
             }
         }
-
     }
 
 }

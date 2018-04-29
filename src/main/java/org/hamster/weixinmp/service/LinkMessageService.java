@@ -1,6 +1,7 @@
 package org.hamster.weixinmp.service;
 
 import com.google.common.base.Strings;
+import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
 import org.hamster.weixinmp.exception.WxException;
@@ -26,9 +27,23 @@ public class LinkMessageService {
         return true;
     }
 
-    public Long addLink(String link, String openId, Long expireTime) throws WxException {
+    private LinkTypeEnum getLinkType(String link) {
+        if (link.contains("shilladfs")) {
+            return LinkTypeEnum.Xinluo;
+        } else if (link.contains("lottedfs")) {
+            return LinkTypeEnum.Letian;
+        } else {
+            return null;
+        }
+    }
+
+    public boolean addLink(String link, String openId, Long expireTime) throws WxException {
         if (!checkLink(link)) {
             throw new WxException("Link is invalid: " + link);
+        }
+        LinkTypeEnum linkTypeEnum = this.getLinkType(link);
+        if (linkTypeEnum == null) {
+            return false;
         }
         LinkEntity linkEntity = new LinkEntity();
         linkEntity.setLink(link);
@@ -36,8 +51,9 @@ public class LinkMessageService {
         linkEntity.setCreateTime(System.currentTimeMillis());
         linkEntity.setExpireTime(expireTime);
         linkEntity.setValid(true);
+        linkEntity.setType(linkTypeEnum);
         linkDao.save(linkEntity);
-        return linkEntity.getId();
+        return true;
     }
 
     public Long removeLink(String link, String openId) {
@@ -57,7 +73,11 @@ public class LinkMessageService {
         List<LinkEntity> linkEntityList = new ArrayList<>();
         Iterator<LinkEntity> iterator = linkDao.findAll().iterator();
         while(iterator.hasNext()) {
-            linkEntityList.add(iterator.next());
+            LinkEntity linkEntity = iterator.next();
+            if (linkEntity.getExpireTime() == null ||
+                    linkEntity.getExpireTime() >= System.currentTimeMillis()) {
+                linkEntityList.add(iterator.next());
+            }
         }
         return linkEntityList;
     }
