@@ -87,6 +87,6 @@ public abstract class AbstractWxServiceTest extends AbstractServiceTest {
 		linkEntity.setValid(true);
 		linkEntity.setCreateTime(System.currentTimeMillis());
 		linkEntity.setLinkHash("1111");
-		linkEntity.setType(LinkTypeEnum.Xinluo);
+		linkEntity.setType(LinkTypeEnum.Xinluo.toString());
 	}
 }

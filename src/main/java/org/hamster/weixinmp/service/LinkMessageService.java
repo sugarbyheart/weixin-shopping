@@ -37,7 +37,7 @@ public class LinkMessageService {
         linkEntity.setCreateTime(System.currentTimeMillis());
         linkEntity.setExpireTime(expireTime);
         linkEntity.setValid(true);
-        linkEntity.setType(linkTypeEnum);
+        linkEntity.setType(linkTypeEnum.toString());
         linkDao.save(linkEntity);
         return true;
     }

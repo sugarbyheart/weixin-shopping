@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.base.WxBaseRespEntity;
+import org.hamster.weixinmp.dao.entity.resp.WxRespTextEntity;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.WxAuthService;
 import org.hamster.weixinmp.service.WxMessageService;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
 
 
 /**
@@ -34,7 +37,7 @@ public class WxController {
 	@Autowired
 	private WxAuthService authService;
 	@Autowired
-	private WxMessageService messageService;
+	private WxMessageService wxMessageService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody
@@ -53,12 +56,17 @@ public class WxController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody
-	String post(@RequestBody String requestBody) throws DocumentException, WxException {
+	String post(@RequestBody String requestBody) throws DocumentException, WxException, IOException {
 
-		WxBaseMsgEntity msg = messageService.parseXML(requestBody);
+		WxBaseMsgEntity msg = wxMessageService.parseXML(requestBody);
 		log.info("received " + msg.getMsgType() + " message.");
-		WxBaseRespEntity resp = messageService.handleMessage(msg);
-		return messageService.parseRespXML(resp).asXML();
+		WxBaseRespEntity resp = wxMessageService.handleMessage(msg);
+		if (resp != null && resp.getMsgType().equals("text")) {
+			WxRespTextEntity wxRespTextEntity = (WxRespTextEntity) resp;
+			wxMessageService.remoteSendText(
+					authService.getAccessToken(), resp.getToUserName(), wxRespTextEntity.getContent());
+		}
+		return wxMessageService.parseRespXML(resp).asXML();
 	}
 
 }

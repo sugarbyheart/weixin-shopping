@@ -5,6 +5,7 @@ import org.hamster.weixinmp.config.WxConfig;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
 import org.hamster.weixinmp.exception.WxException;
+import org.hamster.weixinmp.model.WxRespCode;
 import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractWxServiceTest;
@@ -40,10 +41,21 @@ public class WxMessageServiceTest extends AbstractWxServiceTest {
     public void testTemplateSend() {
 
         try {
-            TemplateSendResponseJson templateSendResponseJson =
+            WxRespCode templateSendResponseJson =
                     wxMessageService.remoteSendTemplate(accessToken, openId, wxConfig.getDefaultTemplateId(), url);
             Assert.assertTrue(templateSendResponseJson.getErrcode().equals(0));
             Assert.assertEquals(templateSendResponseJson.getErrmsg(), "ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testMesageSend() {
+
+        try {
+            WxRespCode wxRespCode = wxMessageService.remoteSendText(accessToken, openId, "Hello");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

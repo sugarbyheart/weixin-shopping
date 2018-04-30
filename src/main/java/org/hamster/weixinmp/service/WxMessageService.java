@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -28,8 +29,11 @@ import org.hamster.weixinmp.dao.entity.resp.WxRespTextEntity;
 import org.hamster.weixinmp.dao.entity.resp.WxRespVideoEntity;
 import org.hamster.weixinmp.dao.entity.resp.WxRespVoiceEntity;
 import org.hamster.weixinmp.exception.WxException;
+import org.hamster.weixinmp.model.WxRespCode;
 import org.hamster.weixinmp.model.response.TemplateSendResponseJson;
 import org.hamster.weixinmp.model.send.SendTemplateJson;
+import org.hamster.weixinmp.model.send.SendTextJson;
+import org.hamster.weixinmp.model.send.item.SendItemTextJson;
 import org.hamster.weixinmp.service.handler.WxEventMessageHandler;
 import org.hamster.weixinmp.service.handler.WxMessageHandlerIfc;
 import org.hamster.weixinmp.service.handler.WxTextMessageHandler;
@@ -43,6 +47,7 @@ import org.springframework.stereotype.Service;
  * @version Dec 30, 2013
  * 
  */
+@Slf4j
 @Service
 public class WxMessageService {
 	
@@ -105,8 +110,10 @@ public class WxMessageService {
 //		}
 //		return result;
 		if (msg.getMsgType().equals(WxMsgTypeEnum.EVENT.toString())) {
+			log.info("Receive a Event message:" + msg.toString());
 			return wxEventMessageHandler.handle(msg, null);
 		} else if (msg.getMsgType().equals(WxMsgTypeEnum.TEXT.toString())) {
+			log.info("Receive a Text message:" + msg.toString());
 			return wxTextMessageHandler.handle(msg, null);
 		} else {
 			return wxStorageService.createRespText("我们已经收到您的消息！请输入您要监控的货物的链接", msg.getFromUserName(),
@@ -147,7 +154,7 @@ public class WxMessageService {
 		return result;
 	}
 
-	public TemplateSendResponseJson remoteSendTemplate(String accessToken, String openId,
+	public WxRespCode remoteSendTemplate(String accessToken, String openId,
 													   String templateId, String url)
 			throws WxException {
 
@@ -155,10 +162,27 @@ public class WxMessageService {
 				SendTemplateJson.builder().touser(openId).template_id(templateId).url(url).build();
 		Map<String, String> params = WxUtil.getAccessTokenParams(accessToken);
 
-		TemplateSendResponseJson templateSendResultMapper =
+		WxRespCode wxRespCode =
 				WxUtil.sendRequest(config.getTemplateSendUrl(), HttpMethod.POST, params,
-						WxUtil.toJsonStringEntity(wxTemplateInfo), TemplateSendResponseJson.class);
-		return templateSendResultMapper;
+						WxUtil.toJsonStringEntity(wxTemplateInfo), WxRespCode.class);
+		return wxRespCode;
+	}
+
+	public WxRespCode remoteSendText(String accessToken, String openId, String content)
+			throws WxException {
+
+		SendTextJson sendTextJson = SendTextJson.builder()
+				.touser(openId)
+				.text(new SendItemTextJson(content))
+				.msgtype("text")
+				.build();
+
+		Map<String, String> params = WxUtil.getAccessTokenParams(accessToken);
+
+		WxRespCode wxRespCode =
+				WxUtil.sendRequest(config.getCustomSendUrl(), HttpMethod.POST, params,
+						WxUtil.toJsonStringEntity(sendTextJson), WxRespCode.class);
+		return wxRespCode;
 	}
 	
 

@@ -49,11 +49,6 @@ public class WxEventMessageHandler implements WxMessageHandlerIfc {
     @Override
     public WxBaseRespEntity handle(WxBaseMsgEntity msg, Map<String, Object> context) {
 
-        if (!this.canHandle(msg)) {
-            log.info("Cannot handle the message!");
-            return null;
-        }
-
         WxMsgEventEntity wxMsgEventEntity = (WxMsgEventEntity) msg;
         String content = "";
 

@@ -27,7 +27,7 @@ public class LinkEntity extends WxBaseEntity {
     private String openId;
     @Column(name = "link", length = WxConfig.COL_LINK, nullable = false)
     private String link;
-    @Column(name = "link_hash", length = WxConfig.COL_LINK_HASH, nullable = false)
+    @Column(name = "link_hash", length = WxConfig.COL_LINK_HASH)
     private String linkHash;
     @Column(name = "create_time", nullable = false)
     private Long createTime;
@@ -36,6 +36,6 @@ public class LinkEntity extends WxBaseEntity {
     @Column(name = "is_valid", nullable = false)
     private boolean isValid = true;
     @Column(name = "type", nullable = false)
-    private LinkTypeEnum type;
+    private String type;
 
 }

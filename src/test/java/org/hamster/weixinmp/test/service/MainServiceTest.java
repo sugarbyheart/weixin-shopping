@@ -15,15 +15,6 @@ public class MainServiceTest extends AbstractWxServiceTest {
 
     @Test
     public void testAddLink() {
-        LinkEntity linkEntity = new LinkEntity();
-        linkEntity.setLink("http://m.shilladfs.com/estore/kr/zh/Skin-Care/" +
-                "Basic-Skin-Care/Basic-Skin-Care-Set/p/3181836");
-        linkEntity.setOpenId("11111");
-        linkEntity.setValid(true);
-        linkEntity.setCreateTime(System.currentTimeMillis());
-        linkEntity.setLinkHash("1111");
-        linkEntity.setType(LinkTypeEnum.Xinluo);
-        Assert.assertTrue(mainService.addLinkEntity(linkEntity));
 
         mainService.start();
     }

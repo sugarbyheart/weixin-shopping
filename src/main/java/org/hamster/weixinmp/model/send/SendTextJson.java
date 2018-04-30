@@ -4,6 +4,7 @@
 package org.hamster.weixinmp.model.send;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,8 +18,9 @@ import org.hamster.weixinmp.model.send.item.SendItemTextJson;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SendTextJson {
 	private String touser;
 	private String msgtype;
-	private SendItemTextJson content;
+	private SendItemTextJson text;
 }
