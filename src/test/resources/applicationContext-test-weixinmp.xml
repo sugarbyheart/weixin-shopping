@@ -38,7 +38,7 @@
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource1" />
 		<property name="packagesToScan" value="org.hamster.weixinmp.dao" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -61,11 +61,19 @@
 		transaction-manager-ref="transactionManager" repository-impl-postfix="Impl" />
 
 	<!-- datasource -->
-	<bean id="dataSource"
+	<bean id="dataSource1"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.h2.Driver" />
 		<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />
 		<property name="username" value="" />
 		<property name="password" value="" />
+	</bean>
+
+	<bean id="dataSource2"
+		  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/weixin_shopping" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 	</bean>
 </beans>
