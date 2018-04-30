@@ -28,7 +28,7 @@
 	<bean id="schedulingTest" class="org.hamster.weixinmp.service.logic.MainService" />
 
 	<task:scheduled-tasks>
-		<task:scheduled ref="schedulingTest" method="start" cron="*/5 * * * *"/>
+		<task:scheduled ref="schedulingTest" method="start" cron="*/300 * * * * *"/>
 	</task:scheduled-tasks>
 
 
