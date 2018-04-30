@@ -64,7 +64,7 @@ public class WxController {
 		if (resp != null && resp.getMsgType().equals("text")) {
 			WxRespTextEntity wxRespTextEntity = (WxRespTextEntity) resp;
 			wxMessageService.remoteSendText(
-					authService.getAccessToken(), resp.getToUserName(), wxRespTextEntity.getContent());
+					authService.getAccessToken(), msg.getFromUserName(), wxRespTextEntity.getContent());
 		}
 		return wxMessageService.parseRespXML(resp).asXML();
 	}

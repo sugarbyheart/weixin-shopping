@@ -5,6 +5,7 @@ import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.dao.entity.logic.UserEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
 import org.hamster.weixinmp.dao.repository.logic.UserDao;
+import org.hamster.weixinmp.service.LinkMessageService;
 import org.hamster.weixinmp.service.UserService;
 import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractWxServiceTest;
@@ -17,6 +18,9 @@ public class LinkServiceTest extends AbstractWxServiceTest {
     @Autowired
     private LinkDao userDao;
 
+    @Autowired
+    private LinkMessageService linkMessageService;
+
 
     @Test
     public void addLinks() {
@@ -27,6 +31,11 @@ public class LinkServiceTest extends AbstractWxServiceTest {
         linkEntity.setType(LinkTypeEnum.Xinluo.toString());
         linkEntity.setValid(true);
         userDao.save(linkEntity);
+    }
+
+    @Test
+    public void loadLinkEntitiesTest() {
+        linkMessageService.loadLinkEntities();
     }
 
 }

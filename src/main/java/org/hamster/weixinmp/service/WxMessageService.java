@@ -116,8 +116,8 @@ public class WxMessageService {
 			log.info("Receive a Text message:" + msg.toString());
 			return wxTextMessageHandler.handle(msg, null);
 		} else {
-			return wxStorageService.createRespText("我们已经收到您的消息！请输入您要监控的货物的链接", msg.getFromUserName(),
-					msg.getToUserName(), 1);
+			return wxStorageService.createRespText("我们已经收到您的消息！请输入您要监控的货物的链接",
+                    msg.getToUserName(), msg.getFromUserName(), 1);
 		}
 
 	}
@@ -158,6 +158,8 @@ public class WxMessageService {
 													   String templateId, String url)
 			throws WxException {
 
+		log.info("---------------Send template message -----------------");
+		log.info(String.format("token:%s, openid:%s, templateId:%s, url:%s", accessToken, openId, templateId, url));
 		SendTemplateJson wxTemplateInfo =
 				SendTemplateJson.builder().touser(openId).template_id(templateId).url(url).build();
 		Map<String, String> params = WxUtil.getAccessTokenParams(accessToken);
@@ -170,6 +172,8 @@ public class WxMessageService {
 
 	public WxRespCode remoteSendText(String accessToken, String openId, String content)
 			throws WxException {
+	    log.info("---------------Send text message -----------------");
+	    log.info(String.format("token:%s, openid:%s, content:%s", accessToken, openId, content));
 
 		SendTextJson sendTextJson = SendTextJson.builder()
 				.touser(openId)

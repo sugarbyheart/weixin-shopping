@@ -9,6 +9,8 @@ import org.hamster.weixinmp.dao.entity.msg.WxMsgTextEntity;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.LinkMessageService;
 import org.hamster.weixinmp.service.WxStorageService;
+import org.hamster.weixinmp.service.web.LetianWebService;
+import org.hamster.weixinmp.service.web.XinluoWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,12 @@ public class WxTextMessageHandler implements WxMessageHandlerIfc {
 
     @Autowired
     private WxStorageService wxStorageService;
+
+    @Autowired
+    private XinluoWebService xinluoWebService;
+
+    @Autowired
+    private LetianWebService letianWebService;
 
 
     private WxMsgTypeEnum[] wxMsgTypeEnums = {WxMsgTypeEnum.TEXT};
@@ -57,13 +65,20 @@ public class WxTextMessageHandler implements WxMessageHandlerIfc {
         }
     }
 
+    private boolean checkCanBuy(String link, LinkTypeEnum linkTypeEnum) {
+
+        if (LinkTypeEnum.Xinluo.equals(linkTypeEnum)) {
+            return xinluoWebService.canBuy(link);
+        } else if (link.contains("lottedfs")) {
+            return letianWebService.canBuy(link);
+        } else {
+            return false;
+        }
+    }
+
     public WxBaseRespEntity handle(WxBaseMsgEntity wxBaseMsgEntity, Map<String, Object> context) throws WxException {
 
         String content = "";
-        if (!canHandle(wxBaseMsgEntity)) {
-            content = "无法处理这样的消息！";
-        }
-
         WxMsgTextEntity wxMsgTextEntity = (WxMsgTextEntity) wxBaseMsgEntity;
         String link = wxMsgTextEntity.getContent();
         if (!link.startsWith("http") && !link.startsWith("https")) {
@@ -71,13 +86,22 @@ public class WxTextMessageHandler implements WxMessageHandlerIfc {
         } else {
             LinkTypeEnum linkType = getLinkType(link);
             if (linkType == null) {
-                content = "无法识别这样的链接!";
+                content = "无法识别这样的链接!我们只支持新罗、乐天的免税店网站链接；比如：http://www.shilladfs.com/estore/kr/zh/Makeup/Base/Primer/p/3317805";
             } else {
-                linkMessageService.addLink(
-                        link, wxMsgTextEntity.getFromUserName(), null, linkType);
-                content = "添加链接成功!";
+                if (!checkCanBuy(link, linkType)) {
+                    if (linkMessageService.checkValidByOpenIdAndLink(wxBaseMsgEntity.getFromUserName(), link)) {
+                        content = "您已经添加过此链接，并且该链接当前有效！";
+                    } else {
+                        linkMessageService.addLink(
+                                link, wxMsgTextEntity.getFromUserName(), null, linkType);
+                        content = "添加链接成功!";
+                    }
+                } else {
+                    content = "您添加的链接现在就有货，不需要进行监控！";
+                }
             }
         }
+
         return wxStorageService.createRespText(content, wxBaseMsgEntity.getFromUserName(),
                 wxBaseMsgEntity.getToUserName(), 1);
     }

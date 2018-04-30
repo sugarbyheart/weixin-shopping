@@ -70,30 +70,30 @@ public class MainService {
     public void start() {
         log.info("------------------- main service start() --------------------");
         List<LinkEntity> linkEntityList = linkMessageService.loadLinkEntities();
+        log.info("Link size:" + linkEntityList.size());
         for (LinkEntity linkEntity : linkEntityList) {
             try {
                 if (linkEntity == null) {
                     continue;
                 }
-                if (linkEntity.getType().equals(LinkTypeEnum.Xinluo)) {
+                if (linkEntity.getType().equals(LinkTypeEnum.Xinluo.toString())) {
                     log.info("Check Xinluo link: " + linkEntity.getLink());
                     if (xinluoWebService.canBuy(linkEntity.getLink())) {
                         wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
                                 linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
                     }
-                    linkEntityList.add(linkEntity);
-                } else if (linkEntity.getType().equals(LinkTypeEnum.Letian)) {
+                } else if (linkEntity.getType().equals(LinkTypeEnum.Letian.toString())) {
                     log.info("Check Letian link: " + linkEntity.getLink());
                     if (letianWebService.canBuy(linkEntity.getLink())) {
                         wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
                                 linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
                     }
-                    linkEntityList.add(linkEntity);
                 } else {
                     // Never heppen
+                    log.info("Invalid link type, Type:" + linkEntity.getType());
                 }
             } catch (Exception e) {
-                log.error("Exception: ", e);
+                log.info("Exception: ", e);
             }
         }
     }

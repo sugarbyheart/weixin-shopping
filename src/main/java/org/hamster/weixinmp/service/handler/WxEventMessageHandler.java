@@ -54,15 +54,15 @@ public class WxEventMessageHandler implements WxMessageHandlerIfc {
 
         if (wxMsgEventEntity.getEvent().equals("subscribe")) {
             userService.userSubscribe(wxMsgEventEntity);
-            content = "恭喜您注册成功，您可以发送要监控的链接，我们只支持新罗、乐天韩国免税网站。";
+            content = "恭喜您注册成功，您可以发送要监控的链接，我们只支持新罗、乐天韩国免税网站!";
         } else if (wxMsgEventEntity.getEvent().equals("unsubscribe")) {
             userService.userUnsubscribe(wxMsgEventEntity);
-            content = "您已经取消关注公众账号！";
+            content = "您已经取消关注公众账号!";
         } else {
             log.info("Event message is not in {subscribe, unsubscribe}");
             return null;
         }
-        return wxStorageService.createRespText(content, msg.getFromUserName(), msg.getToUserName(), 1);
+        return wxStorageService.createRespText(content, msg.getToUserName(), msg.getFromUserName(), 1);
     }
 
     @Override

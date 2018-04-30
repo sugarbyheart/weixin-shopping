@@ -1,6 +1,7 @@
 package org.hamster.weixinmp.service;
 
 import com.google.common.base.Strings;
+import lombok.extern.slf4j.Slf4j;
 import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
@@ -17,6 +18,7 @@ import java.util.List;
  * Created by tom on 18/4/27.
  */
 
+@Slf4j
 @Service
 public class LinkMessageService {
 
@@ -42,6 +44,14 @@ public class LinkMessageService {
         return true;
     }
 
+    public boolean checkValidByOpenIdAndLink(String openId, String link) {
+        LinkEntity linkEntity = linkDao.findLinkEntityByOpenIdAndLink(openId, link);
+        if (linkEntity == null || linkEntity.isValid() == false) {
+            return false;
+        }
+        return true;
+    }
+
     public Long removeLink(String link, String openId) {
         if (Strings.isNullOrEmpty(link) || Strings.isNullOrEmpty(openId)) {
             throw new IllegalArgumentException("link or openId is null");
@@ -56,13 +66,14 @@ public class LinkMessageService {
     }
 
     public List<LinkEntity> loadLinkEntities() {
+
         List<LinkEntity> linkEntityList = new ArrayList<>();
         Iterator<LinkEntity> iterator = linkDao.findAll().iterator();
         while(iterator.hasNext()) {
             LinkEntity linkEntity = iterator.next();
             if (linkEntity.getExpireTime() == null ||
                     linkEntity.getExpireTime() >= System.currentTimeMillis()) {
-                linkEntityList.add(iterator.next());
+                linkEntityList.add(linkEntity);
             }
         }
         return linkEntityList;
