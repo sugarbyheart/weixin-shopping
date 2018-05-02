@@ -34,6 +34,9 @@ public class WebServiceTest extends AbstractWxServiceTest {
     private final String cannotBuyLetian2 =
             "http://m.chn.lottedfs.com/kr/product/productDetail?prdNo=20000442087";
 
+    private final String canBuyLetian3 = "http://chn.lottedfs.com/kr/product/productDetail?prdNo=10000041804";
+    private final String cannotBuyLetian3 = "http://chn.lottedfs.com/kr/product/productDetail?prdNo=10001836395";
+
     @Autowired
     private XinluoWebService xinluoWebService;
 
@@ -50,6 +53,8 @@ public class WebServiceTest extends AbstractWxServiceTest {
         Assert.assertFalse(xinluoWebService.canBuy(cannotBuyXinluo2));
         Assert.assertTrue(letianWebService.canBuy(canBuyLetian2));
         Assert.assertFalse(letianWebService.canBuy(cannotBuyLetian2));
+        Assert.assertTrue(letianWebService.canBuy(canBuyLetian3));
+        Assert.assertFalse(letianWebService.canBuy(cannotBuyLetian3));
     }
 
 

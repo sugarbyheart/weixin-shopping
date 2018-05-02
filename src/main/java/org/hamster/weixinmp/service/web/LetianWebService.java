@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 public class LetianWebService implements WebServiceInterface {
 
     private final String base = "chn.lottedfs.com";
-    private final String selector = "#prdDetailTopArea > div.productArea > div.info > div.buyBtn.soldOut";
+    private final String selector1 = "#prdDetailTopArea > div.productArea > div.info > div.buyBtn.soldOut";
+    private final String selector2 = "#prdDetailTopArea > div.rightSection " +
+            "> div.tab-container > div.tabsBody.tabs01 > div.btn > a";
 
     @Override
     public LinkTypeEnum linkType() {
@@ -35,8 +37,10 @@ public class LetianWebService implements WebServiceInterface {
     public boolean canBuy(String url) {
         try {
             Document doc = Jsoup.connect(url).get();
-            Elements elements = doc.select(selector);
-            if (elements != null && elements.size() != 0) {
+            Elements elements1 = doc.select(selector1);
+            Elements elements2 = doc.select(selector2);
+            if ((elements1 != null && elements1.size() != 0)
+                    || elements2 != null && elements2.size() == 2) {
                 return false;
             }
             return true;
