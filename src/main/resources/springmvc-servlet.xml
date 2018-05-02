@@ -23,14 +23,11 @@
 	<!-- scan service class with @components -->
 	<context:component-scan base-package="org.hamster.weixinmp" />
 
-	<task:annotation-driven />
-
 	<bean id="schedulingTest" class="org.hamster.weixinmp.service.logic.MainService" />
-
-	<task:scheduled-tasks>
-		<task:scheduled ref="schedulingTest" method="start" cron="*/300 * * * * *"/>
+	<task:scheduler id="myScheduler" pool-size="1"/>
+	<task:scheduled-tasks scheduler="myScheduler">
+		<task:scheduled ref="schedulingTest" method="start" cron="0 */2 * * * *"/>
 	</task:scheduled-tasks>
-
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -40,10 +37,11 @@
 		</property>
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="entityManagerFactory"
 		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -70,20 +68,20 @@
 					  transaction-manager-ref="transactionManager" repository-impl-postfix="Impl" />
 
 	<!-- datasource -->
-	<!--<bean id="dataSource"-->
-		  <!--class="org.springframework.jdbc.datasource.SimpleDriverDataSource">-->
-		<!--<property name="driverClass" value="org.h2.Driver" />-->
-		<!--<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />-->
-		<!--<property name="username" value="" />-->
-		<!--<property name="password" value="" />-->
-	<!--</bean>-->
 	<bean id="dataSource"
 		  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://enyrwkfcmufk.mysql.sae.sina.com.cn:10592/weixin_shopping" />
-		<property name="username" value="root" />
-		<property name="password" value="Weibo891225" />
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="" />
+		<property name="password" value="" />
 	</bean>
+	<!--<bean id="dataSource"-->
+		  <!--class="org.springframework.jdbc.datasource.SimpleDriverDataSource">-->
+		<!--<property name="driverClass" value="com.mysql.jdbc.Driver" />-->
+		<!--<property name="url" value="jdbc:mysql://enyrwkfcmufk.mysql.sae.sina.com.cn:10592/weixin_shopping" />-->
+		<!--<property name="username" value="root" />-->
+		<!--<property name="password" value="Weibo891225" />-->
+	<!--</bean>-->
 
 
 

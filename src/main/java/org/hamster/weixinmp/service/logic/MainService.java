@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Slf4j
 @Component
-@EnableScheduling
 public class MainService {
 
     @Autowired
@@ -38,12 +37,8 @@ public class MainService {
     private WxAuthService wxAuthService;
     @Autowired
     private WxConfig wxConfig;
-
     @Autowired
     private WxMessageService wxMessageService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private LinkMessageService linkMessageService;
@@ -67,6 +62,11 @@ public class MainService {
 //        }
 //    }
 
+    public MainService() {
+        log.info("Finished initializing main service");
+    }
+
+    @Scheduled(fixedRate = 20000)
     public void start() {
         log.info("------------------- main service start() --------------------");
         List<LinkEntity> linkEntityList = linkMessageService.loadLinkEntities();
