@@ -62,9 +62,15 @@ public class MainService {
 //        }
 //    }
 
+    @PostConstruct
+    public void init() {
+        log.info("Post construct");
+    }
+
     public MainService() {
         log.info("Finished initializing main service");
     }
+
 
     @Scheduled(fixedRate = 20000)
     public void start() {

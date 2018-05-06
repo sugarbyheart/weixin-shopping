@@ -71,8 +71,8 @@ public class LinkMessageService {
         Iterator<LinkEntity> iterator = linkDao.findAll().iterator();
         while(iterator.hasNext()) {
             LinkEntity linkEntity = iterator.next();
-            if (linkEntity.getExpireTime() == null ||
-                    linkEntity.getExpireTime() >= System.currentTimeMillis()) {
+            if (linkEntity.isValid() == true && (linkEntity.getExpireTime() == null ||
+                    linkEntity.getExpireTime() >= System.currentTimeMillis())) {
                 linkEntityList.add(linkEntity);
             }
         }
