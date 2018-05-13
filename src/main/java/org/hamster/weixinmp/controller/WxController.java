@@ -4,7 +4,6 @@
 package org.hamster.weixinmp.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.hamster.weixinmp.dao.entity.base.WxBaseMsgEntity;
 import org.hamster.weixinmp.dao.entity.base.WxBaseRespEntity;

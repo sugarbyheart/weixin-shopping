@@ -49,7 +49,6 @@ import org.hamster.weixinmp.dao.repository.resp.WxRespTextDao;
 import org.hamster.weixinmp.dao.repository.resp.WxRespVideoDao;
 import org.hamster.weixinmp.dao.repository.resp.WxRespVoiceDao;
 import org.hamster.weixinmp.dao.repository.user.WxGroupDao;
-import org.hamster.weixinmp.dao.repository.user.WxUserDao;
 import org.hamster.weixinmp.util.WxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,7 +96,7 @@ public class WxStorageService {
 	protected WxRespVideoDao respVideoDao;
 	@Autowired(required = false)
 	protected WxRespVoiceDao respVoiceDao;
-	
+
 	@Autowired(required = false)
 	protected WxItemImageDao itemImageDao;
 	@Autowired(required = false)
@@ -113,7 +112,7 @@ public class WxStorageService {
 
 	@Autowired(required = false)
 	protected WxMenuBtnDao wxMenuBtnDao;
-	
+
 	@Autowired(required = false)
 	protected WxGroupDao groupDao;
 

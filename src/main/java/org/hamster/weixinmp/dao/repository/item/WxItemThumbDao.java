@@ -4,6 +4,7 @@
 package org.hamster.weixinmp.dao.repository.item;
 
 import org.hamster.weixinmp.dao.entity.item.WxItemThumbEntity;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface WxItemThumbDao extends
-		PagingAndSortingRepository<WxItemThumbEntity, Long> {
+		CrudRepository<WxItemThumbEntity, Long> {
 
 }

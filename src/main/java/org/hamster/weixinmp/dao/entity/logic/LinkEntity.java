@@ -4,8 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hamster.weixinmp.config.WxConfig;
-import org.hamster.weixinmp.constant.LinkType;
-import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.base.WxBaseEntity;
 
 import javax.persistence.Column;
