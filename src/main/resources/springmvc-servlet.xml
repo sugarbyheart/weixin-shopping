@@ -68,19 +68,19 @@
 					  transaction-manager-ref="transactionManager" repository-impl-postfix="Impl" />
 
 	<!-- datasource -->
-	<!--<bean id="dataSource"-->
-		  <!--class="org.springframework.jdbc.datasource.SimpleDriverDataSource">-->
-		<!--<property name="driverClass" value="org.h2.Driver" />-->
-		<!--<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />-->
-		<!--<property name="username" value="" />-->
-		<!--<property name="password" value="" />-->
-	<!--</bean>-->
 	<bean id="dataSource"
 		  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://enyrwkfcmufk.mysql.sae.sina.com.cn:10592/weixin_shopping" />
-		<property name="username" value="root" />
-		<property name="password" value="Weibo891225" />
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:mem:wx_mp;DB_CLOSE_DELAY=-1" />
+		<property name="username" value="" />
+		<property name="password" value="" />
 	</bean>
+	<!--<bean id="dataSource"-->
+		  <!--class="org.springframework.jdbc.datasource.SimpleDriverDataSource">-->
+		<!--<property name="driverClass" value="com.mysql.jdbc.Driver" />-->
+		<!--<property name="url" value="jdbc:mysql://enyrwkfcvmufk.mysql.sae.sina.com.cn:10592/weixin_shopping" />-->
+		<!--<property name="username" value="root" />-->
+		<!--<property name="password" value="Weibo891225" />-->
+	<!--</bean>-->
 
 </beans>
