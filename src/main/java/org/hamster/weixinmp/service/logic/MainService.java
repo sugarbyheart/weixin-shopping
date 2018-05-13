@@ -72,7 +72,7 @@ public class MainService {
     }
 
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 2000)
     public void start() {
         log.info("------------------- main service start() --------------------");
         List<LinkEntity> linkEntityList = linkMessageService.loadLinkEntities();
