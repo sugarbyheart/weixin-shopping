@@ -5,6 +5,7 @@ import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -14,14 +15,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConsumerConfiguration implements ApplicationListener<ApplicationReadyEvent> {
 
+    @Value("${exchange.name}")
+    private String exchangeName;
+
+    @Value("${detect.result.queue}")
+    private String queueName;
+
+    @Value("${detect.result.routingKey}")
+    private String routingKey;
+
     @Bean
     public Exchange exchange() {
-        return new TopicExchange("eventExchange");
+        return new TopicExchange(exchangeName);
     }
 
     @Bean
     public Queue queue() {
-        return new Queue("orderServiceQueue");
+        return new Queue(queueName);
     }
 
     @Bean
@@ -29,7 +39,7 @@ public class ConsumerConfiguration implements ApplicationListener<ApplicationRea
         return BindingBuilder
                 .bind(queue)
                 .to(eventExchange)
-                .with("customer.*").noargs();
+                .with(routingKey).noargs();
     }
 
     @Bean
@@ -55,7 +65,7 @@ public class ConsumerConfiguration implements ApplicationListener<ApplicationRea
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        log.info("SUBSCRIBING TO EVENTS MATCHING KEY '{}' FROM QUEUE '{}'!", "customer.*", "orderServiceQueue");
+        log.info("SUBSCRIBING TO EVENTS MATCHING KEY '{}' FROM QUEUE '{}'!", routingKey, queueName);
     }
 
 }

@@ -22,7 +22,7 @@ public interface WxMessageHandlerIfc {
 
 	boolean canHandle( WxBaseMsgEntity wxBaseMsgEntity);
 	
-	WxBaseRespEntity handle(WxBaseMsgEntity msg, Map<String, Object> context) throws WxException;
+	WxBaseRespEntity handle(WxBaseMsgEntity msg) throws WxException;
 	
 	Integer priority();
 }

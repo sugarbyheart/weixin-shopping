@@ -3,16 +3,9 @@
  */
 package org.hamster.weixinmp.test.base;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Date;
-
+import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.hamster.weixinmp.config.WxConfig;
-import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.auth.WxAuth;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.dao.entity.logic.UserEntity;
@@ -22,6 +15,9 @@ import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.WxAuthService;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.*;
+import java.util.Date;
 
 /**
  * @author grossopaforever@gmail.com
@@ -86,7 +82,6 @@ public abstract class AbstractWxServiceTest extends AbstractServiceTest {
 		linkEntity.setOpenId("11111");
 		linkEntity.setValid(true);
 		linkEntity.setCreateTime(System.currentTimeMillis());
-		linkEntity.setLinkHash("1111");
 		linkEntity.setType(LinkTypeEnum.Xinluo.toString());
 	}
 }

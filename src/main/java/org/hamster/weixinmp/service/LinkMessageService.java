@@ -1,15 +1,13 @@
 package org.hamster.weixinmp.service;
 
+import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
-import org.hamster.weixinmp.constant.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
 import org.hamster.weixinmp.exception.WxException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Iterator;

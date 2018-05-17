@@ -111,10 +111,10 @@ public class WxMessageService {
 //		return result;
 		if (msg.getMsgType().equals(WxMsgTypeEnum.EVENT.toString())) {
 			log.info("Receive a Event message:" + msg.toString());
-			return wxEventMessageHandler.handle(msg, null);
+			return wxEventMessageHandler.handle(msg);
 		} else if (msg.getMsgType().equals(WxMsgTypeEnum.TEXT.toString())) {
 			log.info("Receive a Text message:" + msg.toString());
-			return wxTextMessageHandler.handle(msg, null);
+			return wxTextMessageHandler.handle(msg);
 		} else {
 			return wxStorageService.createRespText("我们已经收到您的消息！请输入您要监控的货物的链接",
                     msg.getToUserName(), msg.getFromUserName(), 1);
@@ -164,9 +164,9 @@ public class WxMessageService {
 				SendTemplateJson.builder().touser(openId).template_id(templateId).url(url).build();
 		Map<String, String> params = WxUtil.getAccessTokenParams(accessToken);
 
-		WxRespCode wxRespCode =
-				WxUtil.sendRequest(config.getTemplateSendUrl(), HttpMethod.POST, params,
-						WxUtil.toJsonStringEntity(wxTemplateInfo), WxRespCode.class);
+		WxRespCode wxRespCode = WxUtil.sendRequest(
+				config.getTemplateSendUrl(), HttpMethod.POST, params,
+				WxUtil.toJsonStringEntity(wxTemplateInfo), WxRespCode.class);
 		return wxRespCode;
 	}
 

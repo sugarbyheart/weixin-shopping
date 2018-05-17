@@ -1,13 +1,9 @@
 package org.hamster.weixinmp.test.service;
 
-import org.hamster.weixinmp.constant.LinkTypeEnum;
+import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
-import org.hamster.weixinmp.dao.entity.logic.UserEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
-import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.hamster.weixinmp.service.LinkMessageService;
-import org.hamster.weixinmp.service.UserService;
-import org.hamster.weixinmp.service.WxMessageService;
 import org.hamster.weixinmp.test.base.AbstractWxServiceTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -47,7 +47,7 @@ public class WxEventMessageHandler implements WxMessageHandlerIfc {
     }
 
     @Override
-    public WxBaseRespEntity handle(WxBaseMsgEntity msg, Map<String, Object> context) {
+    public WxBaseRespEntity handle(WxBaseMsgEntity msg) {
 
         WxMsgEventEntity wxMsgEventEntity = (WxMsgEventEntity) msg;
         String content = "";

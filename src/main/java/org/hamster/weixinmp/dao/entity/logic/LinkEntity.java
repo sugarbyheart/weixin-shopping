@@ -1,5 +1,7 @@
 package org.hamster.weixinmp.dao.entity.logic;
 
+import com.github.sugarbyheart.daigou.common.Enum.ItemBrandEnum;
+import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -25,8 +27,8 @@ public class LinkEntity extends WxBaseEntity {
     private String openId;
     @Column(name = "link", length = WxConfig.COL_LINK, nullable = false)
     private String link;
-    @Column(name = "link_hash", length = WxConfig.COL_LINK_HASH)
-    private String linkHash;
+    @Column(name = "image_link", length = WxConfig.COL_LINK, nullable = false)
+    private String imageLink;
     @Column(name = "create_time", nullable = false)
     private Long createTime;
     @Column(name = "expire_time")
@@ -35,5 +37,9 @@ public class LinkEntity extends WxBaseEntity {
     private boolean isValid = true;
     @Column(name = "type", nullable = false)
     private String type;
+    @Column(name = "link_type", length = 10, nullable = false)
+    private LinkTypeEnum linkTypeEnum;
+    @Column(name = "item_brand", length = 10, nullable = false)
+    private ItemBrandEnum itemBrandEnum;
 
 }

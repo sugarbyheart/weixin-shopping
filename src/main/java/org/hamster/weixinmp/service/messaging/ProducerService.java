@@ -1,10 +1,12 @@
 package org.hamster.weixinmp.service.messaging;
 
+import com.github.sugarbyheart.daigou.common.DTO.ItemDiscription;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,20 +22,8 @@ public class ProducerService {
     private final RabbitTemplate rabbitTemplate;
     private final TopicExchange topicExchange;
 
-    private int messageNumber = 0;
-
-    private static List<String> ROUTING_KEYS = Arrays.asList(
-            "customer.created",
-            "customer.edited",
-            "customer.deleted",
-            "order.created",
-            "order.edited",
-            "order.deleted",
-            "invoice.created",
-            "invoice.edited",
-            "invoice.deleted");
-
-    private Random random = new Random();
+    @Value("${item.discription.routingKey}")
+    private String routingKey;
 
     @Autowired
     public ProducerService(RabbitTemplate rabbitTemplate, TopicExchange topicExchange) {
@@ -41,15 +31,8 @@ public class ProducerService {
         this.topicExchange = topicExchange;
     }
 
-    @Scheduled(fixedDelay = 1000, initialDelay = 500)
-    public void sendMessage() {
-        String routingKey = randomRoutingKey();
-        String message = String.format("Event no. %d of type '%s'", ++messageNumber, routingKey);
-        rabbitTemplate.convertAndSend(topicExchange.getName(), routingKey, message);
-        log.info("Published message '{}'", message);
+    public void sendDiscription(ItemDiscription discription) {
+        rabbitTemplate.convertAndSend(topicExchange.getName(), routingKey, discription);
     }
 
-    private String randomRoutingKey() {
-        return ROUTING_KEYS.get(random.nextInt(ROUTING_KEYS.size()));
-    }
 }
