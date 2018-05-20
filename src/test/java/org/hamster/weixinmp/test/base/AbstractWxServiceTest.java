@@ -3,18 +3,16 @@
  */
 package org.hamster.weixinmp.test.base;
 
-import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.hamster.weixinmp.config.WxConfig;
 import org.hamster.weixinmp.dao.entity.auth.WxAuth;
-import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
-import org.hamster.weixinmp.dao.entity.logic.UserEntity;
 import org.hamster.weixinmp.dao.repository.logic.LinkDao;
 import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.WxAuthService;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import java.io.*;
 import java.util.Date;
@@ -24,7 +22,7 @@ import java.util.Date;
  * @version Jan 5, 2014
  * 
  */
-public abstract class AbstractWxServiceTest extends AbstractServiceTest {
+public abstract class AbstractWxServiceTest extends AbstractJUnit4SpringContextTests {
 	
 	public static final String TEST_FOLDER = "src/test/resources/tmp";
 	public static final String ACCESS_TOKEN_FILE = TEST_FOLDER + "/accessToken.txt";
@@ -63,25 +61,6 @@ public abstract class AbstractWxServiceTest extends AbstractServiceTest {
 				reader.close();
 			}
 		}
-
-		prepareFordata();
-
 	}
 
-	private void prepareFordata() {
-		UserEntity userEntity = new UserEntity();
-		userEntity.setOpenId("11111");
-		userEntity.setFirstFollowTime(System.currentTimeMillis());
-		userEntity.setUpdateTime(System.currentTimeMillis());
-		userEntity.setValid(true);
-		userDao.save(userEntity);
-
-		LinkEntity linkEntity = new LinkEntity();
-		linkEntity.setLink("http://m.shilladfs.com/estore/kr/zh/Skin-Care/" +
-				"Basic-Skin-Care/Basic-Skin-Care-Set/p/3181836");
-		linkEntity.setOpenId("11111");
-		linkEntity.setValid(true);
-		linkEntity.setCreateTime(System.currentTimeMillis());
-		linkEntity.setType(LinkTypeEnum.Xinluo.toString());
-	}
 }

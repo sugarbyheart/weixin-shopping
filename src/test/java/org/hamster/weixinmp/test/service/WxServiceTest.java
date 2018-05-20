@@ -6,10 +6,13 @@ package org.hamster.weixinmp.test.service;
 import org.hamster.weixinmp.dao.repository.msg.WxBaseMsgDao;
 import org.hamster.weixinmp.exception.WxException;
 import org.hamster.weixinmp.service.WxAuthService;
-import org.hamster.weixinmp.test.base.AbstractServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 /**
@@ -17,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version Jul 28, 2013
  * 
  */
-public class WxServiceTest extends AbstractServiceTest {
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class WxServiceTest {
 
 	@Autowired
 	private WxAuthService authService;
-	
-	@Autowired
-	private WxBaseMsgDao wxBaseMsgDao;
 
 	@Test
 	public void testValidateAuth() throws WxException {

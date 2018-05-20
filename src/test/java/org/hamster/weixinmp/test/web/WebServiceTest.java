@@ -6,6 +6,8 @@ import org.junit.Test;
 /**
  * Created by tom on 18/4/25.
  */
+
+
 public class WebServiceTest extends AbstractWxServiceTest {
 
     private final String canBuyXinluo1 =

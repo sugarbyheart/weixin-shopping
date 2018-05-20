@@ -6,15 +6,15 @@ import org.hamster.weixinmp.dao.entity.msg.WxMsgEventEntity;
 import org.hamster.weixinmp.dao.repository.logic.UserDao;
 import org.hamster.weixinmp.service.UserService;
 import org.hamster.weixinmp.service.WxMessageService;
-import org.hamster.weixinmp.test.base.AbstractServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
  * Created by tom on 18/4/26.
  */
-public class UserServiceTest extends AbstractServiceTest {
+public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     private WxMessageService wxMessageService;
