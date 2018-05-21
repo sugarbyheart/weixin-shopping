@@ -121,10 +121,12 @@
           url: 'http://121.40.90.141:8003/broker/overview/royaltyinfo/brokerid/B01203',
           method: 'GET',
           success: function (obj) {
+            console.log(self.items);
+            console.log(self.items_bak);
             self.items.splice(index, 1);
             self.items_bak.splice(index, 1);
             console.log(self.items);
-
+            console.log(self.items_bak);
           },
           error: function (error) {
             console.log(error);
@@ -135,7 +137,7 @@
         console.log(this.items_bak);
         var text = $('#search_text').val()
         if (!text) {
-          this.items = this.items_bak;
+          this.items = this.items_bak.slice(0);
           return;
         }
         var new_items = []
@@ -160,8 +162,8 @@
           url: link,
           method: 'GET',
           success: function (obj) {
-            self.items_bak = obj.data;
-            self.items = obj.data;
+            self.items_bak = obj.data.slice(0);
+            self.items = obj.data.slice(0);
             if (website == 'xinluo') {
               self.size_xinluo = obj.data.length;
             } else if (website == 'letian') {
