@@ -60,7 +60,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class WxStorageService {
 	public static final Logger log = Logger.getLogger(WxStorageService.class);
 

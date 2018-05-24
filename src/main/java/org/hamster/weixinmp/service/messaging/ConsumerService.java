@@ -8,8 +8,10 @@ import org.hamster.weixinmp.service.WxMessageService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Slf4j
+@Service
 public class ConsumerService {
 
     @Autowired
@@ -21,7 +23,7 @@ public class ConsumerService {
     @Value("${wx_default_template_id}")
     private String templateId;
 
-    @RabbitListener
+    @RabbitListener(queues = "detect.result.queue")
     public void receive(ItemDetectResult itemDetectResult) {
         try {
             if (itemDetectResult.isHasItem()) {

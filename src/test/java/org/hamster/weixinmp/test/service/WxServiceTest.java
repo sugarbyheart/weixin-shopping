@@ -35,32 +35,5 @@ public class WxServiceTest {
 				"1375112572", "1375102247",
 				"5906019193781128573"));
 	}
-	
-	public static final String MSG_LOC_XML = "<xml>"
-			+ "<ToUserName><![CDATA[toUser]]></ToUserName>"
-			+ "<FromUserName><![CDATA[fromUser]]></FromUserName>"
-			+ "<CreateTime>1351776360</CreateTime>"
-			+ "<MsgType><![CDATA[location]]></MsgType>"
-			+ "<Location_X>23.134521</Location_X>"
-			+ "<Location_Y>113.358803</Location_Y>" 
-			+ "<Scale>20</Scale>"
-			+ "<Label><![CDATA[位置信息]]></Label>"
-			+ "<MsgId>1234567890123456</MsgId>" + "</xml> ";
-	
-//	@Test
-//	public void testMessageStorage() throws WxException, DocumentException {
-//		wxService.saveMsgLoc(WxXmlUtil.toXML(MSG_LOC_XML));
-//		Iterable<WxBaseMsgEntity> msgs = wxBaseMsgDao.findAll();
-//		for (WxBaseMsgEntity msg : msgs) {
-//			System.out.println(msg.toString());
-//		}
-//	}
-//	
-//	@Test
-//	public void testCreateRespText() throws DocumentException {
-//		WxRespTextEntity respText = wxService.createRespText("this is a content", "foo", "bar", 0);
-//		WxXmlUtil.getRespTextXML(respText);
-//	}
-	
 
 }

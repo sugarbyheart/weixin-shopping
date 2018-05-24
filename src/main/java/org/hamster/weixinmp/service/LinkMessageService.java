@@ -28,7 +28,8 @@ public class LinkMessageService {
         return true;
     }
 
-    public boolean addLink(String link, String openId, Long expireTime, LinkTypeEnum linkTypeEnum) throws WxException {
+    public boolean addLink(String link, String imageLink, String openId, Long expireTime, LinkTypeEnum linkTypeEnum)
+            throws WxException {
         if (!checkLink(link)) {
             throw new WxException("Link is invalid: " + link);
         }
@@ -38,6 +39,7 @@ public class LinkMessageService {
         linkEntity.setCreateTime(System.currentTimeMillis());
         linkEntity.setExpireTime(expireTime);
         linkEntity.setValid(true);
+        linkEntity.setImageLink(imageLink);
         linkEntity.setType(linkTypeEnum.toString());
         linkDao.save(linkEntity);
         return true;

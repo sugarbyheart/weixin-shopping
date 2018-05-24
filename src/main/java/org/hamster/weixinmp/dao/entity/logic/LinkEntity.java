@@ -37,9 +37,4 @@ public class LinkEntity extends WxBaseEntity {
     private boolean isValid = true;
     @Column(name = "type", nullable = false)
     private String type;
-    @Column(name = "link_type", length = 10, nullable = false)
-    private LinkTypeEnum linkTypeEnum;
-    @Column(name = "item_brand", length = 10, nullable = false)
-    private ItemBrandEnum itemBrandEnum;
-
 }

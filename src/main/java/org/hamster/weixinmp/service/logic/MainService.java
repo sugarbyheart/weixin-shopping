@@ -1,6 +1,7 @@
 package org.hamster.weixinmp.service.logic;
 
 import com.github.sugarbyheart.daigou.common.DTO.ItemDiscription;
+import com.github.sugarbyheart.daigou.common.Enum.LinkTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.hamster.weixinmp.dao.entity.logic.LinkEntity;
 import org.hamster.weixinmp.service.LinkMessageService;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,43 +37,20 @@ public class MainService {
         log.info("Finished initializing main service");
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 20000)
     public void start() {
         List<LinkEntity> linkEntityList = linkMessageService.loadLinkEntities();
+        log.info("Load all the links, size:{}, timestamp:{}", linkEntityList.size(), new Date());
         for (LinkEntity linkEntity : linkEntityList) {
 
             ItemDiscription itemDiscription = ItemDiscription.builder()
                     .openId(linkEntity.getOpenId())
                     .link(linkEntity.getLink())
-                    .linkTypeEnum(linkEntity.getLinkTypeEnum())
-                    .itemBrandEnum(linkEntity.getItemBrandEnum())
+                    .linkTypeEnum(LinkTypeEnum.inst(linkEntity.getType()))
                     .build();
 
             producerService.sendDiscription(itemDiscription);
+            log.info("Send item: " + itemDiscription.toString());
         }
     }
 }
-
-//            try {
-//                if (linkEntity == null) {
-//                    continue;
-//                }
-//                if (linkEntity.getType().equals(LinkTypeEnum.Xinluo.toString())) {
-//                    log.info("Check Xinluo link: " + linkEntity.getLink());
-//                    if (xinluoWebService.canBuy(linkEntity.getLink())) {
-//                        wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
-//                                linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
-//                    }
-//                } else if (linkEntity.getType().equals(LinkTypeEnum.Letian.toString())) {
-//                    log.info("Check Letian link: " + linkEntity.getLink());
-//                    if (letianWebService.canBuy(linkEntity.getLink())) {
-//                        wxMessageService.remoteSendTemplate(wxAuthService.getAccessToken(),
-//                                linkEntity.getOpenId(), wxConfig.getDefaultTemplateId(), linkEntity.getLink());
-//                    }
-//                } else {
-//                    // Never heppen
-//                    log.info("Invalid link type, Type:" + linkEntity.getType());
-//                }
-//            } catch (Exception e) {
-//                log.info("Exception: ", e);
-//            }
