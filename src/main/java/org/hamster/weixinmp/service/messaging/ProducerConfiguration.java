@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @Configuration
-@EnableScheduling
 public class ProducerConfiguration {
 
     @Value("${exchange.name}")

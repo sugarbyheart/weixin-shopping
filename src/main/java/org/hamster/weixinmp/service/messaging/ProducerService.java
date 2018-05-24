@@ -33,6 +33,7 @@ public class ProducerService {
 
     public void sendDiscription(ItemDiscription discription) {
         rabbitTemplate.convertAndSend(topicExchange.getName(), routingKey, discription);
+        log.info("Send message: {}", discription.toString());
     }
 
 }
